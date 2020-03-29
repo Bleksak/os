@@ -62,6 +62,7 @@
 	%endif
 %endmacro
 
+; dest, ch, len
 %macro memset 3
 	%if %[__BITS__] == 16
 		
@@ -79,4 +80,45 @@
 	%endif
 %endmacro
 
+
+%if %[__BITS__] == 16
+
+;reg = count
+%macro get_memory_map 0
+	xor ebx, ebx
+
+	extern MEMORY_MAP
+	mov esi, MEMORY_MAP
+	
+
+%%loop:	
+	mov edi, %%tmp_map
+	mov eax, 0xE820
+	mov edx, 0x534D4150 ; SMAP
+	
+	mov ecx, 20
+
+	int 0x15
+	jc %%end
+
+	mov [%%tmp_map + 20], ecx
+	
+	push esi
+
+	memcpy MEMORY_MAP, %%tmp_map, 24
+	
+	pop esi
+
+	add esi, 24
+
+	test ebx, ebx
+	jnz %%loop
+	
+	jmp %%end
+
+%%tmp_map: times 3 dq 0
+%%end:
+
+%endmacro
+%endif
 %endif

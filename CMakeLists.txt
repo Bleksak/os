@@ -9,8 +9,7 @@ enable_language(ASM_NASM)
 include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/inc)
 include_directories(PRIVATE SYSTEM ${CMAKE_SOURCE_DIR}/inc)
 
-add_library(lib STATIC "lib/memory.asm" "lib/console.asm")
-#add_library(console STATIC "lib/console.asm")
+add_library(lib STATIC "lib/vga.asm" "lib/memory.asm" "lib/console.asm")
 
 link_libraries(lib)
 

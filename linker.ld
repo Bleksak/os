@@ -24,6 +24,19 @@ SECTIONS
 		*(.stage)
 		*(.lib)
 		*(.data)
+		
+		. = ALIGN(0x10);
+
+		MEMORY_MAP = .;
+		. += 24*10;
+		MEMORY_MAP_END = .;
+		
+		. = ALIGN(0x10);
+
+		VBE_INFORMATION = .;
+		. += 0x200;
+		VBE_INFORMATION_END = .;
+		
 		. = ALIGN(0x200);
 		_STAGE2_END = .;
 	}

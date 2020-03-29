@@ -25,6 +25,8 @@ memset_16:
 
 memcpy16:
 	; we need to do a far copy (far read/write)
+
+	extern MEMORY_MAP
 	
 	mov ecx, [esp + 10]
 	mov esi, [esp + 6]
